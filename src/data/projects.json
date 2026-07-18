@@ -1,24 +1,24 @@
 [
   {
-    "title": "Portfolio Website",
-    "description": "A fast, animated personal portfolio built with Vite and React, deployed via GitHub Actions to GitHub Pages. Content is driven entirely by JSON data files so it's easy to extend without touching layout code.",
-    "tags": ["React", "Vite", "CSS", "GitHub Actions"],
-    "link": "https://github.com/Ashique-7/Ashique-7.github.io",
+    "title": "Data Annotation Quality Validation Tool",
+    "description": "A Python tool that validates the quality of COCO-style image object-detection annotations, simulating a real annotation-review pipeline. Automatically flags out-of-bounds and degenerate boxes, missing labels, and duplicate/overlapping boxes (via IoU), plus class-imbalance checks — outputting a CSV report ready for human review.",
+    "tags": ["Python", "NumPy", "Pandas", "Computer Vision"],
+    "link": "https://github.com/Ashique-7",
     "date": "2026-07",
     "featured": true
   },
   {
-    "title": "Sample Project Two",
-    "description": "Replace this with a real project. A short description of what it does, what problem it solves, and any interesting technical decisions you made along the way.",
-    "tags": ["Python", "APIs"],
+    "title": "Cache Controller FSM Simulator",
+    "description": "A C++ finite-state-machine simulator for a direct-mapped cache controller based on Patterson & Hennessy, modeling write-back and write-allocate policies. Walks through cycle-by-cycle transitions across IDLE, COMPARE_TAG, WRITE_BACK, and ALLOCATE for read/write hits and dirty misses.",
+    "tags": ["C++", "Computer Architecture", "FSM"],
     "link": "https://github.com/Ashique-7",
-    "date": "2026-03",
+    "date": "2026-04",
     "featured": true
   },
   {
-    "title": "Sample Project Three",
-    "description": "Another placeholder entry. Swap the title, description, tags, and link when you have a real project to showcase here.",
-    "tags": ["Java", "Data Structures"],
+    "title": "Book Recommendation System",
+    "description": "A C++ book recommendation system built on object-oriented principles with a file-based data store. Recommends titles by genre and rating while demonstrating encapsulation, inheritance, polymorphism, and file handling. Built as a team project (\"The Semi-Colons\").",
+    "tags": ["C++", "OOP", "File I/O"],
     "link": "https://github.com/Ashique-7",
     "date": "2025-11",
     "featured": false
