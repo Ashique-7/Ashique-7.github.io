@@ -7,5 +7,5 @@ export default defineConfig({
   // This repo is a user/org page (Ashique-7.github.io), which GitHub Pages
   // always serves from the domain root — so base stays '/'. A project-page
   // repo (e.g. my-project) would need base: '/my-project/' instead.
-  base: '/',
+  
 })
