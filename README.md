@@ -1,6 +1,6 @@
 # AKM Azimul Ashique Khan — Portfolio
 
-[One-sentence description of the site — e.g. "Personal portfolio showcasing projects, achievements, and writing."]
+This is a personal portfolio website showcasing my projects and achievements.
 
 **Live site:** [https://ashique-7.github.io](https://ashique-7.github.io)
 
