@@ -31,12 +31,32 @@
 }
 
 .nav-links a {
+  position: relative;
   color: var(--text-muted);
-  transition: color 0.25s var(--ease);
+  transition: color 0.3s var(--ease-out);
+}
+
+/* Underline that grows from the left on hover — a small hand-crafted
+   detail that beats a bare color swap. */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
 }
 
 .nav-links a:hover {
-  color: var(--accent);
+  color: var(--text);
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
 }
 
 @media (max-width: 560px) {

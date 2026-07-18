@@ -11,7 +11,11 @@ export default function Hero() {
       </div>
       <div className="container hero-inner">
         <p className="eyebrow hero-enter hero-enter-1">Portfolio</p>
-        <h1 className="hero-name hero-enter hero-enter-2">{profile.name}</h1>
+        <h1 className="hero-name">
+          <span className="hero-name-mask">
+            <span className="hero-name-inner">{profile.name}</span>
+          </span>
+        </h1>
         <p className="hero-tagline hero-enter hero-enter-3">{profile.tagline}</p>
         <div className="hero-enter hero-enter-4">
           <a className="hero-cta" href="#projects">

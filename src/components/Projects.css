@@ -1,40 +1,268 @@
+/* =========================================================
+   Featured work — editorial numbered index
+   Big Fraunces titles, monospace metadata, and hand-built
+   hover states (accent bar, magnetic title pull, cursor light).
+========================================================= */
+.featured-list {
+  margin-bottom: var(--space-9);
+  border-bottom: 1px solid var(--border);
+}
+
+.featured-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-5);
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+  isolation: isolate;
+  transition: background 0.4s var(--ease-out);
+}
+
+/* Cursor-following light — positioned from --mx/--my (set in JS).
+   Fades in on hover only, so it reads as light, not a shape. */
+.featured-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(232, 134, 43, 0.1),
+    transparent 55%
+  );
+  transition: opacity 0.4s var(--ease-out);
+}
+
+/* Left accent bar that grows down from the top edge on hover —
+   feels like the row is being "selected". */
+.featured-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.featured-row:hover {
+  background: var(--surface);
+}
+
+.featured-row:hover::before {
+  opacity: 1;
+}
+
+.featured-row:hover::after {
+  transform: scaleY(1);
+}
+
+.featured-index {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding-top: 0.4em;
+  transition: color 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.featured-row:hover .featured-index {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.featured-body {
+  min-width: 0;
+}
+
+.featured-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.featured-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  transition: transform 0.4s var(--ease-out);
+}
+
+/* Magnetic pull — the title eases toward the reading direction. */
+.featured-row:hover .featured-title {
+  transform: translateX(8px);
+}
+
+.featured-year {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.featured-arrow {
+  color: var(--accent);
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.featured-row:hover .featured-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.featured-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 60ch;
+  margin-bottom: var(--space-4);
+}
+
+.featured-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.featured-tags li {
+  position: relative;
+}
+
+/* Middot separators between tags — quieter than pills. */
+.featured-tags li:not(:last-child)::after {
+  content: "\00B7";
+  position: absolute;
+  right: calc(var(--space-4) / -2);
+  transform: translateX(-50%);
+  color: var(--border);
+}
+
+@media (max-width: 620px) {
+  .featured-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .featured-index {
+    padding-top: 0;
+  }
+  /* On phones the magnetic pull would fight the narrow column. */
+  .featured-row:hover .featured-title {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   More work — supporting card grid
+========================================================= */
+.more-eyebrow {
+  margin-bottom: var(--space-5);
+}
+
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-5);
 }
 
-.project-grid-featured {
-  margin-bottom: var(--space-6);
-}
-
 .project-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: var(--space-5);
-  transition: transform 0.35s var(--ease), background 0.35s var(--ease),
-    border-color 0.35s var(--ease);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.4s var(--ease-out), background 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out);
+}
+
+/* Cursor-following spotlight, same mechanism as the featured rows. */
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(232, 134, 43, 0.14),
+    transparent 60%
+  );
+  transition: opacity 0.4s var(--ease-out);
+}
+
+/* Accent hairline that draws across the top edge on hover. */
+.project-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
 }
 
 .project-card:hover {
   transform: translateY(-4px);
   background: var(--surface-hover);
-  border-color: var(--accent);
+  border-color: rgba(232, 134, 43, 0.4);
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover::after {
+  transform: scaleX(1);
 }
 
 .project-card-top {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: var(--space-2);
 }
 
 .project-date {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-muted);
   letter-spacing: 0.04em;
+}
+
+.project-arrow {
+  color: var(--accent);
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.project-card:hover .project-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 .project-title {
@@ -58,8 +286,9 @@
 }
 
 .project-tags li {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
   color: var(--accent);
   background: var(--accent-soft);
   padding: var(--space-1) var(--space-3);

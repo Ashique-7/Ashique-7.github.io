@@ -12,7 +12,11 @@
   --border: #26262e;
 
   --font-display: "Fraunces", "Georgia", serif;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  /* System monospace for technical metadata (index numbers, years,
+     tags) — adds editorial contrast with no extra font download. */
+  --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas,
+    monospace;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -26,7 +30,10 @@
   --space-10: 128px;
 
   --max-width: 1100px;
+  /* Signature easing: a gentle overshoot-free "settle" for reveals,
+     and a snappier out-curve for hover feedback. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -83,12 +90,64 @@ ul {
 }
 
 .section {
+  position: relative;
   padding: var(--space-9) 0;
-  border-bottom: 1px solid var(--border);
+  isolation: isolate;
+  overflow: hidden;
 }
 
-.section:last-of-type {
-  border-bottom: none;
+/* Fade-edged hairline divider — reads more refined than a flat
+   full-width 1px border (which is the cheap default). */
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border) 15%,
+    var(--border) 85%,
+    transparent 100%
+  );
+}
+
+.section:last-of-type::after {
+  display: none;
+}
+
+/* Faint directional light so each lower section has depth instead
+   of flat black. Alternating sides give quiet rhythm on scroll. */
+.section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  width: 50vw;
+  height: 60%;
+  max-width: 640px;
+  pointer-events: none;
+  opacity: 0.6;
+  background: radial-gradient(
+    60% 60% at 50% 0%,
+    rgba(232, 134, 43, 0.05) 0%,
+    transparent 70%
+  );
+}
+
+.section:nth-of-type(even)::before {
+  right: 0;
+  background: radial-gradient(
+    60% 60% at 80% 10%,
+    rgba(90, 105, 160, 0.06) 0%,
+    transparent 70%
+  );
+}
+
+.section:nth-of-type(odd)::before {
+  left: 0;
 }
 
 .eyebrow {
@@ -103,10 +162,32 @@ ul {
 }
 
 .section-title {
+  position: relative;
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.5vw, 2.5rem);
   font-weight: 500;
   margin-bottom: var(--space-6);
+}
+
+/* Ghost watermark word behind the title — the reference's editorial
+   signature. Kept whisper-faint so it reads as texture, not clutter.
+   Sections clip overflow, so the oversized word never scrolls. */
+.section-title[data-ghost]::before {
+  content: attr(data-ghost);
+  position: absolute;
+  left: -0.04em;
+  bottom: 0.1em;
+  z-index: -1;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 4.5em;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text);
+  opacity: 0.035;
+  pointer-events: none;
 }
 
 /* ---------------------------------------------------------
@@ -114,12 +195,35 @@ ul {
 --------------------------------------------------------- */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transform: translateY(20px);
+  filter: blur(6px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out),
+    filter 0.8s var(--ease-out);
+  will-change: opacity, transform, filter;
 }
 
 .reveal.is-visible {
   opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Panel wipe — content opens from a thin center line outward, echoing
+   the reference video's section reveals. Used for the big blocks
+   (cards, featured rows, photo) where a "panel opening" reads richer
+   than a plain fade. */
+.reveal-panel {
+  opacity: 0;
+  clip-path: inset(45% 0 45% 0);
+  transform: translateY(14px);
+  transition: clip-path 0.9s var(--ease-out), opacity 0.6s var(--ease-out),
+    transform 0.9s var(--ease-out);
+  will-change: clip-path, opacity, transform;
+}
+
+.reveal-panel.is-visible {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
   transform: translateY(0);
 }
 
@@ -149,6 +253,61 @@ ul {
   .reveal-stagger > * {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
+  }
+  .reveal-panel {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------
+   Eyebrow with a drawn leading rule — small editorial detail
+   that makes section labels feel set, not typed.
+--------------------------------------------------------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.eyebrow::before {
+  content: "";
+  width: var(--space-6);
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-out) 0.15s;
+}
+
+.reveal.is-visible .eyebrow::before,
+.is-visible.eyebrow::before,
+.hero .eyebrow::before {
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------
+   Film grain — a fixed, ultra-subtle noise layer over the whole
+   page. The single highest-leverage "expensive" tell: it breaks
+   up flat dark fills without adding any visible motion or clutter.
+--------------------------------------------------------- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow::before {
+    transition: none;
+    transform: scaleX(1);
   }
 }

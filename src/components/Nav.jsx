@@ -4,7 +4,6 @@ import "./Nav.css";
 const LINKS = [
   { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
-  { href: "#achievements", label: "Achievements" },
   { href: "#contact", label: "Contact" },
 ];
 
