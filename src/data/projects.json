@@ -8,19 +8,19 @@
     "featured": true
   },
   {
-    "title": "Sample Project Two",
-    "description": "Replace this with a real project. A short description of what it does, what problem it solves, and any interesting technical decisions you made along the way.",
-    "tags": ["Python", "APIs"],
-    "link": "https://github.com/Ashique-7",
-    "date": "2026-03",
+    "title": "data-annotation-qna-tool",
+    "description": "A Python tool for validating the quality of image object-detection annotations (COCO-style bounding boxes). Built to simulate a real annotation-review pipeline: generate/ingest annotated data, then automatically flag common labeling errors before the dataset is used for model training.",
+    "tags": ["Python"],
+    "link": "https://github.com/Ashique-7/data-annotation-qna-tool/",
+    "date": "2026-07-17",
     "featured": true
   },
   {
-    "title": "Sample Project Three",
-    "description": "Another placeholder entry. Swap the title, description, tags, and link when you have a real project to showcase here.",
-    "tags": ["Java", "Data Structures"],
-    "link": "https://github.com/Ashique-7",
-    "date": "2025-11",
+    "title": "Cache Controller FSM Simulator ",
+    "description": "This project implements a finite state machine (FSM)-based cache controller based on Patterson & Hennessy (Computer Organization and Design). The simulator models a direct-mapped cache with write-back and write-allocate policies and shows cycle-by-cycle state transitions.",
+    "tags": ["Computer Organization and Architechture", "C++"],
+    "link": "https://github.com/Ashique-7/Simple-Cache-Controller-Simulator",
+    "date": "2026-04",
     "featured": false
   }
 ]
