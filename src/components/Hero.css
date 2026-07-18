@@ -96,6 +96,27 @@
   margin-bottom: var(--space-5);
 }
 
+/* Mask-rise entrance: the name lifts up from a clipped baseline —
+   the premium "type rises into view" move from the reference. */
+.hero-name-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em; /* room for descenders inside the clip */
+  vertical-align: bottom;
+}
+
+.hero-name-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: hero-rise 1s var(--ease-out) 0.2s forwards;
+}
+
+@keyframes hero-rise {
+  to {
+    transform: translateY(0);
+  }
+}
+
 .hero-tagline {
   max-width: 46ch;
   font-size: clamp(1.05rem, 2vw, 1.35rem);
@@ -156,5 +177,10 @@
 
   .hero-blob {
     animation: none;
+  }
+
+  .hero-name-inner {
+    animation: none;
+    transform: none;
   }
 }
