@@ -1,14 +1,14 @@
 .about-grid {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 240px 1fr;
   gap: var(--space-8);
   align-items: start;
 }
 
 .about-photo {
   position: relative;
-  width: 340px;
-  height: 400px;
+  width: 240px;
+  height: 285px;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -58,7 +58,7 @@
   }
 
   .about-photo {
-    width: min(100%, 300px);
-    height: 340px;
+    width: min(100%, 240px);
+    height: 285px;
   }
 }

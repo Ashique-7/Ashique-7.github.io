@@ -3,7 +3,7 @@
     "title": "Data Annotation Quality Validation Tool",
     "description": "A Python tool that validates the quality of COCO-style image object-detection annotations, simulating a real annotation-review pipeline. Automatically flags out-of-bounds and degenerate boxes, missing labels, and duplicate/overlapping boxes (via IoU), plus class-imbalance checks — outputting a CSV report ready for human review.",
     "tags": ["Python", "NumPy", "Pandas", "Computer Vision"],
-    "link": "https://github.com/Ashique-7",
+    "link": "https://github.com/Ashique-7/data-annotation-qna-tool",
     "date": "2026-07",
     "featured": true
   },
@@ -11,7 +11,7 @@
     "title": "Cache Controller FSM Simulator",
     "description": "A C++ finite-state-machine simulator for a direct-mapped cache controller based on Patterson & Hennessy, modeling write-back and write-allocate policies. Walks through cycle-by-cycle transitions across IDLE, COMPARE_TAG, WRITE_BACK, and ALLOCATE for read/write hits and dirty misses.",
     "tags": ["C++", "Computer Architecture", "FSM"],
-    "link": "https://github.com/Ashique-7",
+    "link": "https://github.com/Ashique-7/Simple-Cache-Controller-Simulator",
     "date": "2026-04",
     "featured": true
   },
@@ -19,7 +19,7 @@
     "title": "Book Recommendation System",
     "description": "A C++ book recommendation system built on object-oriented principles with a file-based data store. Recommends titles by genre and rating while demonstrating encapsulation, inheritance, polymorphism, and file handling. Built as a team project (\"The Semi-Colons\").",
     "tags": ["C++", "OOP", "File I/O"],
-    "link": "https://github.com/Ashique-7",
+    "link": "https://github.com/Abrar-Faiyaz07/CSE4302_LabProject",
     "date": "2025-11",
     "featured": false
   }
