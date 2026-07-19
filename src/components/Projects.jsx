@@ -24,7 +24,7 @@ function FeaturedRow({ project, index }) {
       href={project.link}
       target="_blank"
       rel="noreferrer"
-      className="featured-row reveal-panel"
+      className="featured-row reveal"
       ref={ref}
       onMouseMove={handleMouseMove}
     >
@@ -56,7 +56,7 @@ function ProjectCard({ project }) {
       href={project.link}
       target="_blank"
       rel="noreferrer"
-      className="project-card reveal-panel"
+      className="project-card reveal"
       ref={ref}
       onMouseMove={handleMouseMove}
     >
