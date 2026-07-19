@@ -2,13 +2,17 @@ import { useEffect, useRef } from "react";
 
 /**
  * Adds "is-visible" to the ref'd element once it scrolls into view,
- * triggering the .reveal / .reveal-panel CSS transitions.
+ * triggering the .reveal CSS transition.
  *
- * Uses a plain scroll/resize listener (throttled via rAF) rather than
- * IntersectionObserver. IO proved unreliable here — it intermittently
- * failed to fire for some elements, leaving content stuck invisible.
- * A direct getBoundingClientRect() check on scroll is bulletproof and
- * reveals the element the moment its top edge nears the viewport.
+ * Deliberately does NOT use IntersectionObserver — it proved unreliable
+ * here, intermittently failing to fire and leaving content invisible.
+ * Instead this checks getBoundingClientRect() on three independent
+ * triggers so a reveal can never be missed:
+ *   1. immediately on mount (content already in view)
+ *   2. on scroll / resize (throttled with rAF)
+ *   3. a low-frequency interval poll as a safety net
+ * All three call the same check; the first one to see the element in
+ * view reveals it and tears everything down.
  */
 export default function useReveal() {
   const ref = useRef(null);
@@ -19,20 +23,13 @@ export default function useReveal() {
 
     let done = false;
 
-    const cleanup = () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-
     const check = () => {
       if (done) return;
       const rect = node.getBoundingClientRect();
-      // Reveal once the element's top is within ~92% of the viewport
-      // height (and it isn't fully scrolled past above).
       if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
         done = true;
         node.classList.add("is-visible");
-        cleanup();
+        teardown();
       }
     };
 
@@ -46,11 +43,19 @@ export default function useReveal() {
       });
     };
 
+    const interval = window.setInterval(check, 300);
+
+    const teardown = () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.clearInterval(interval);
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     check(); // reveal anything already in view on mount
 
-    return cleanup;
+    return teardown;
   }, []);
 
   return ref;
